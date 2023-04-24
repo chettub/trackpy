@@ -493,7 +493,7 @@ def annotate(centroids, image, circle_size=None, color=None,
             raise ValueError("multiple colors specified, no split category "
                              "specified")
         _plot_style.update(markeredgecolor=color[0])
-        ax.plot(centroids['x'], centroids['y'],
+        ax.plot(centroids['x'].values, centroids['y'].values,
                 **_plot_style)
     else:
         if len(color) != len(split_thresh) + 1:
@@ -501,19 +501,19 @@ def annotate(centroids, image, circle_size=None, color=None,
                              "plus 1")
         low = centroids[split_category] < split_thresh[0]
         _plot_style.update(markeredgecolor=color[0])
-        ax.plot(centroids['x'][low], centroids['y'][low],
+        ax.plot(centroids['x'][low].values, centroids['y'][low].values,
                 **_plot_style)
 
         for c, (bot, top) in zip(color[1:-1], pairwise(split_thresh)):
             indx = ((centroids[split_category] >= bot) &
                     (centroids[split_category] < top))
             _plot_style.update(markeredgecolor=c)
-            ax.plot(centroids['x'][indx], centroids['y'][indx],
+            ax.plot(centroids['x'][indx].values, centroids['y'][indx].values,
                     **_plot_style)
 
         high = centroids[split_category] >= split_thresh[-1]
         _plot_style.update(markeredgecolor=color[-1])
-        ax.plot(centroids['x'][high], centroids['y'][high],
+        ax.plot(centroids['x'][high].values, centroids['y'][high].values,
                 **_plot_style)
     return invert_yaxis(ax)
 
